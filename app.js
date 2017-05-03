@@ -53,3 +53,105 @@ let Country = require('./models/country')
 //   })
 //   console.log(mapped)
 // })
+
+//Build does not save the record right away, where create does. This is build:
+// let genovia = Country.build({
+//   code: 'GEN',
+//   name: 'Genovia',
+//   continent: 'Europe',
+//   region: 'Make Believe'
+// })
+//
+// genovia.save()
+//   .then(function(){
+//     console.log("Genovia has been built!")
+//   })
+//   .catch(function(error){
+//     console.log(error)
+//   })
+
+//Create works much the same way as build, only it persists the record right away.
+// let florin = Country.create({
+//   code: 'FLR',
+//   name: 'Florin',
+//   continent: 'Europe',
+//   region: 'Make Believe'
+// })
+//   .then(function(){
+//     console.log("Florin has been created!");
+//   })
+//   .catch(function(error){
+//     console.log(error);
+//   })
+
+//to delete records, use the destroy method
+// Country.all({
+//   where: {
+//     region: 'Storyland'
+//   }
+// })
+//   .then(function(records){
+//     let promises = records.map(function(country){
+//       return country.destroy()
+//     })
+//
+//     return Promise.all(promises)
+//   })
+//   .then(function(results){
+//     console.log("They're gone!")
+//   })
+//   .catch(function(error){
+//     console.log(error)
+//   })
+
+//To update a record, we'll re-create Florin then update it:
+// let florin = Country.create({
+//   code: 'FLR',
+//   name: 'Florin',
+//   continent: 'Europe',
+//   region: 'Make Believe'
+// })
+//   .then(function(country){
+//     country.region = "Storyland"  // <-- this is where we update its values
+//     console.log("The Florin record was updated!");
+//     return country.save() // a promise
+//   })
+//   .catch(function(error){
+//     console.log(error)
+//   })
+
+//To show the entire table:
+// Country.findAll().then(function(results){
+//   let mapped = results.map(function(country){
+//     return country.get()
+//   })
+//   console.log(mapped)
+// })
+//   .catch(function(error){
+//     console.log(error);
+//   })
+
+//add a attributes: [] section to your query to modify which attributes are displayed. To present something readable, we must invoke the map method
+  // Country.findAll({
+  //   attributes: ['code','name']
+  // }).then(function(results){
+  //   let mapped = results.map(function(country){
+  //     return country.get()
+  //   })
+  //   console.log(mapped)
+  // })
+  //   .catch(function(error){
+  //     console.log(error);
+  //   })
+
+//To pull a selected group of records from the database, pass in a where: {} clause to .findAll():
+Country.findAll({where:{region: 'Europe'}})
+  .then(function(results){
+  let mapped = results.map(function(country){
+    return country.get()
+  })
+  console.log(mapped)
+})
+  .catch(function(error){
+    console.log(error);
+  })
